@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}About Us — NH Engineering{% endblock %}
+{% block extra_head %}
+<style>
+.page-hero { position:relative;z-index:1;background:var(--plate);border-bottom:1px solid var(--rivet);padding:80px 2rem;overflow:hidden; }
+.page-hero::after { content:'';position:absolute;right:0;top:0;width:40%;height:100%;background:repeating-linear-gradient(-45deg,transparent,transparent 10px,rgba(46,56,71,0.4) 10px,rgba(46,56,71,0.4) 11px); }
+.section { padding:60px 0;position:relative;z-index:1; }
+.about-layout { display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center; }
+.about-text h2 { font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:38px;color:var(--white);margin-bottom:20px;line-height:1.1; }
+.about-text p { color:var(--smoke);font-size:15px;line-height:1.8;margin-bottom:16px; }
+.about-visual { background:var(--plate);border:1px solid var(--rivet);border-radius:3px;padding:40px;display:grid;grid-template-columns:1fr 1fr;gap:20px; }
+.about-stat { text-align:center;padding:20px;background:var(--iron);border-radius:2px; }
+.about-stat-num { font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:44px;color:var(--rust);line-height:1; }
+.about-stat-label { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--smoke);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px; }
+.team-card { background:var(--plate);border:1px solid var(--rivet);border-radius:3px;padding:32px;border-top:3px solid var(--amber); }
+.team-name { font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:28px;color:var(--white);margin-bottom:4px; }
+.team-role { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--rust);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px; }
+.team-desc { color:var(--smoke);font-size:14px;line-height:1.7; }
+.values-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:20px; }
+.value-card { background:var(--plate);border:1px solid var(--rivet);border-radius:3px;padding:28px; }
+.value-icon { font-size:40px;margin-bottom:16px; }
+.value-title { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;color:var(--white);margin-bottom:8px; }
+.value-desc { font-size:13px;color:var(--smoke);line-height:1.6; }
+@media(max-width:768px){ .about-layout,.values-grid { grid-template-columns:1fr; } }
+</style>
+{% endblock %}
+{% block content %}
+<div class="page-hero">
+    <div style="max-width:1200px;margin:0 auto;position:relative;z-index:2;">
+        <div class="section-label">// Who We Are</div>
+        <h1 class="section-title" style="margin-bottom:12px;">About <span style="color:var(--rust)">NH Engineering</span></h1>
+        <p style="color:var(--smoke);font-size:17px;max-width:560px;">A Nagpur-based manufacturer building reliable industrial machinery and structures since 2002.</p>
+    </div>
+</div>
+<section class="section">
+    <div class="container">
+        <div class="about-layout">
+            <div class="about-text">
+                <div class="section-label">// Our Story</div>
+                <h2>Two Decades of Industrial Excellence</h2>
+                <p>NH Engineering & Fabricating was established in 2002 by Mr. Naushad Haji Khan on Bhandara Road, Nagpur. What began as a small fabrication workshop has grown into a trusted manufacturer and supplier of flour mill plants, rice mill plants, and prefabricated steel structures.</p>
+                <p>Our facility on Kh No 4/2 Kapsi, Bhandara Road serves clients across Maharashtra and central India, providing durable, high-performance industrial equipment built to Indian industrial standards.</p>
+                <p>Every machine we produce is engineered from Mild Steel, powder-coated for longevity, and rigorously tested before delivery. We provide full installation, commissioning, and after-sales support.</p>
+            </div>
+            <div class="about-visual">
+                <div class="about-stat"><div class="about-stat-num">2002</div><div class="about-stat-label">Year Founded</div></div>
+                <div class="about-stat"><div class="about-stat-num">15+</div><div class="about-stat-label">Products</div></div>
+                <div class="about-stat"><div class="about-stat-num">100T</div><div class="about-stat-label">Max Daily Capacity</div></div>
+                <div class="about-stat"><div class="about-stat-num">3φ</div><div class="about-stat-label">Industrial Power</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="divider" style="margin:0;"></div>
+<section class="section">
+    <div class="container">
+        <div class="section-label" style="margin-bottom:10px;">// Leadership</div>
+        <h2 class="section-title" style="margin-bottom:36px;">The People <span style="color:var(--rust)">Behind the Work</span></h2>
+        <div style="max-width:500px;">
+            <div class="team-card">
+                <div style="font-size:48px;margin-bottom:16px;">👷</div>
+                <div class="team-name">Mr. Naushad Haji Khan</div>
+                <div class="team-role">Founder & Proprietor</div>
+                <div class="team-desc">With over 20 years in industrial fabrication and milling equipment, Mr. Khan founded NH Engineering & Fabricating to bring reliable, affordable machinery to small and medium enterprises across central India. His hands-on approach to quality and customer service remains the core of how we operate.</div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section" style="padding-top:0;">
+    <div class="container">
+        <div class="section-label" style="margin-bottom:10px;">// Our Values</div>
+        <h2 class="section-title" style="margin-bottom:36px;">What Drives <span style="color:var(--rust)">Our Work</span></h2>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">🎯</div>
+                <div class="value-title">Precision First</div>
+                <div class="value-desc">Every product is manufactured to exact tolerances. We don't cut corners on material quality or assembly.</div>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">💡</div>
+                <div class="value-title">Client-Centric</div>
+                <div class="value-desc">We listen to what businesses need and configure our machines accordingly — not the other way around.</div>
+            </div>
+            <div class="value-card">
+                <div class="value-icon">🛡️</div>
+                <div class="value-title">Long-Term Reliability</div>
+                <div class="value-desc">Powder-coated steel frames and industrial-grade motors mean fewer breakdowns and lower running costs.</div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

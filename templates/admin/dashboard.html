@@ -1,0 +1,82 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block content %}
+<div class="stat-grid">
+    <div class="stat-card" style="border-top:3px solid var(--rust);">
+        <div class="stat-num">{{ product_count }}</div>
+        <div class="stat-label">Total Products</div>
+    </div>
+    <div class="stat-card" style="border-top:3px solid var(--amber);">
+        <div class="stat-num">{{ blog_count }}</div>
+        <div class="stat-label">Blog Posts</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Categories</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">2002</div>
+        <div class="stat-label">Est. Year</div>
+    </div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+    <div>
+        <div class="section-header">
+            <h2>Recent Products</h2>
+            <a href="/admin/products/new" class="btn btn-primary btn-sm">+ Add Product</a>
+        </div>
+        <table class="admin-table">
+            <thead>
+                <tr><th>Product</th><th>Category</th><th></th></tr>
+            </thead>
+            <tbody>
+            {% for p in recent_products %}
+            <tr>
+                <td style="color:var(--white);font-weight:500;">{{ p['name'] }}</td>
+                <td><span class="badge badge-published">{{ p['category'] }}</span></td>
+                <td><a href="/admin/products/{{ p['id'] }}/edit" class="btn btn-secondary btn-sm">Edit</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div style="margin-top:12px;">
+            <a href="/admin/products" class="btn btn-secondary btn-sm">View All Products →</a>
+        </div>
+    </div>
+    <div>
+        <div class="section-header">
+            <h2>Recent Blog Posts</h2>
+            <a href="/admin/blogs/new" class="btn btn-primary btn-sm">+ New Post</a>
+        </div>
+        <table class="admin-table">
+            <thead>
+                <tr><th>Title</th><th>Status</th><th></th></tr>
+            </thead>
+            <tbody>
+            {% for b in recent_blogs %}
+            <tr>
+                <td style="color:var(--white);font-weight:500;">{{ b['title'][:35] }}{% if b['title']|length > 35 %}...{% endif %}</td>
+                <td><span class="badge {% if b['published'] %}badge-published{% else %}badge-draft{% endif %}">{% if b['published'] %}Published{% else %}Draft{% endif %}</span></td>
+                <td><a href="/admin/blogs/{{ b['id'] }}/edit" class="btn btn-secondary btn-sm">Edit</a></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div style="margin-top:12px;">
+            <a href="/admin/blogs" class="btn btn-secondary btn-sm">View All Posts →</a>
+        </div>
+    </div>
+</div>
+<div style="margin-top:28px;background:var(--plate);border:1px solid var(--rivet);border-radius:3px;padding:20px;display:flex;align-items:center;justify-content:space-between;">
+    <div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;color:var(--white);">Quick Links</div>
+        <div style="font-size:13px;color:var(--smoke);margin-top:4px;">Jump to common actions</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="/admin/products/new" class="btn btn-primary">+ New Product</a>
+        <a href="/admin/blogs/new" class="btn btn-secondary">+ New Blog Post</a>
+        <a href="/" target="_blank" class="btn btn-secondary">🌐 View Site</a>
+    </div>
+</div>
+{% endblock %}

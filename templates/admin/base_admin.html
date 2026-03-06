@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin{% endblock %} — NH Engineering CMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow:wght@400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root { --steel:#1a1f2e;--iron:#0d1117;--rust:#c94a1a;--amber:#f0a500;--smoke:#8a9bb0;--cloud:#c8d4e3;--white:#f0f4f8;--plate:#232b3a;--rivet:#2e3847; }
+        *,*::before,*::after { box-sizing:border-box;margin:0;padding:0; }
+        body { font-family:'Barlow',sans-serif;background:var(--iron);color:var(--cloud);min-height:100vh;display:flex; }
+        .sidebar { width:240px;flex-shrink:0;background:var(--plate);border-right:1px solid var(--rivet);display:flex;flex-direction:column;position:fixed;height:100vh;left:0;top:0;z-index:100; }
+        .sidebar-brand { padding:20px;border-bottom:1px solid var(--rivet);display:flex;align-items:center;gap:12px; }
+        .sidebar-logo { width:36px;height:36px;background:var(--rust);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px;color:white; }
+        .sidebar-brand-name { font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:16px;color:var(--white); }
+        .sidebar-brand-sub { font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--rust);letter-spacing:2px; }
+        .sidebar-nav { flex:1;padding:16px 0; }
+        .sidebar-section { font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--smoke);padding:16px 20px 8px;text-transform:uppercase; }
+        .sidebar-link { display:flex;align-items:center;gap:10px;padding:10px 20px;text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:15px;color:var(--smoke);border-left:3px solid transparent;transition:all 0.15s; }
+        .sidebar-link:hover { color:var(--white);background:rgba(255,255,255,0.03); }
+        .sidebar-link.active { color:var(--white);border-left-color:var(--rust);background:rgba(201,74,26,0.08); }
+        .sidebar-link .icon { font-size:16px;width:20px;text-align:center; }
+        .sidebar-footer { padding:16px 20px;border-top:1px solid var(--rivet);font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--smoke); }
+        .main { margin-left:240px;flex:1;display:flex;flex-direction:column;min-height:100vh; }
+        .topbar { height:56px;background:var(--plate);border-bottom:1px solid var(--rivet);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:50; }
+        .topbar-title { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;color:var(--white); }
+        .topbar-actions { display:flex;align-items:center;gap:12px; }
+        .topbar-user { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--smoke); }
+        .topbar-logout { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--smoke);text-decoration:none;padding:6px 14px;border:1px solid var(--rivet);border-radius:2px;transition:all 0.2s; }
+        .topbar-logout:hover { border-color:var(--rust);color:var(--rust); }
+        .page-content { padding:28px;flex:1; }
+        .flash-messages { margin-bottom:20px; }
+        .flash-msg { background:var(--plate);border-left:4px solid var(--rust);padding:12px 20px;border-radius:2px;font-size:14px;color:var(--cloud);margin-bottom:8px; }
+        .stat-grid { display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px; }
+        .stat-card { background:var(--plate);border:1px solid var(--rivet);border-radius:3px;padding:20px; }
+        .stat-num { font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:40px;color:var(--rust);line-height:1; }
+        .stat-label { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--smoke);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px; }
+        .admin-table { width:100%;border-collapse:collapse;background:var(--plate);border-radius:3px;overflow:hidden;border:1px solid var(--rivet); }
+        .admin-table th { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);background:var(--iron);padding:12px 16px;text-align:left;border-bottom:1px solid var(--rivet); }
+        .admin-table td { padding:12px 16px;font-size:14px;border-bottom:1px solid rgba(46,56,71,0.5);vertical-align:middle; }
+        .admin-table tr:last-child td { border-bottom:none; }
+        .admin-table tr:hover td { background:rgba(255,255,255,0.02); }
+        .form-card { background:var(--plate);border:1px solid var(--rivet);border-radius:3px;padding:32px;max-width:800px; }
+        .form-group { margin-bottom:20px; }
+        .form-label { font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--smoke);display:block;margin-bottom:8px; }
+        .form-input,.form-textarea,.form-select { width:100%;background:var(--iron);border:1px solid var(--rivet);border-radius:2px;padding:10px 14px;color:var(--cloud);font-family:'Barlow',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s; }
+        .form-input:focus,.form-textarea:focus,.form-select:focus { border-color:var(--rust); }
+        .form-textarea { min-height:180px;resize:vertical; }
+        .form-select option { background:var(--plate); }
+        .form-actions { display:flex;gap:12px;margin-top:24px;padding-top:24px;border-top:1px solid var(--rivet); }
+        .btn { display:inline-flex;align-items:center;gap:8px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;padding:10px 20px;border-radius:2px;border:none;cursor:pointer;transition:all 0.2s; }
+        .btn-primary { background:var(--rust);color:white; }
+        .btn-primary:hover { background:#e05c28; }
+        .btn-secondary { background:transparent;color:var(--cloud);border:1px solid var(--rivet); }
+        .btn-secondary:hover { border-color:var(--smoke);color:var(--white); }
+        .btn-danger { background:transparent;color:#e05c5c;border:1px solid rgba(224,92,92,0.3); }
+        .btn-danger:hover { background:rgba(224,92,92,0.1);border-color:#e05c5c; }
+        .btn-sm { padding:6px 12px;font-size:11px; }
+        .section-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:20px; }
+        .section-header h2 { font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:26px;color:var(--white); }
+        .badge { font-family:'Share Tech Mono',monospace;font-size:10px;padding:3px 8px;border-radius:1px;letter-spacing:1px; }
+        .badge-published { background:rgba(26,122,74,0.2);color:#4ade80;border:1px solid rgba(74,222,128,0.3); }
+        .badge-draft { background:rgba(240,165,0,0.15);color:var(--amber);border:1px solid rgba(240,165,0,0.3); }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <div class="sidebar-logo">NH</div>
+        <div>
+            <div class="sidebar-brand-name">NH Engineering</div>
+            <div class="sidebar-brand-sub">// CMS Panel</div>
+        </div>
+    </div>
+    <nav class="sidebar-nav">
+        <div class="sidebar-section">Overview</div>
+        <a href="/admin" class="sidebar-link {% if request.endpoint == 'admin_dashboard' %}active{% endif %}">
+            <span class="icon">📊</span> Dashboard
+        </a>
+        <div class="sidebar-section">Content</div>
+        <a href="/admin/products" class="sidebar-link {% if 'product' in request.endpoint %}active{% endif %}">
+            <span class="icon">⚙️</span> Products
+        </a>
+        <a href="/admin/blogs" class="sidebar-link {% if 'blog' in request.endpoint %}active{% endif %}">
+            <span class="icon">📝</span> Blog Posts
+        </a>
+        <div class="sidebar-section">Settings</div>
+        <a href="/admin/change-password" class="sidebar-link {% if request.endpoint == 'admin_change_password' %}active{% endif %}">
+            <span class="icon">🔐</span> Change Password
+        </a>
+        <div class="sidebar-section">Site</div>
+        <a href="/" target="_blank" class="sidebar-link"><span class="icon">🌐</span> View Website</a>
+    </nav>
+    <div class="sidebar-footer">Logged in as {{ session.get('admin_user','admin') }}</div>
+</aside>
+<div class="main">
+    <div class="topbar">
+        <div class="topbar-title">{% block page_title %}Dashboard{% endblock %}</div>
+        <div class="topbar-actions">
+            <span class="topbar-user">// {{ session.get('admin_user','admin') }}</span>
+            <a href="/admin/logout" class="topbar-logout">Logout</a>
+        </div>
+    </div>
+    <div class="page-content">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for msg in messages %}<div class="flash-msg">✓ {{ msg }}</div>{% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+</div>
+</body>
+</html>

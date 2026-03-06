@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Products — NH Engineering{% endblock %}
+{% block extra_head %}
+<style>
+.page-hero { position:relative;z-index:1;background:var(--plate);border-bottom:1px solid var(--rivet);padding:60px 2rem;overflow:hidden; }
+.page-hero::after { content:'';position:absolute;right:0;top:0;width:50%;height:100%;background:repeating-linear-gradient(-45deg,transparent,transparent 10px,rgba(46,56,71,0.4) 10px,rgba(46,56,71,0.4) 11px); }
+.page-hero-content { position:relative;z-index:2;max-width:1200px;margin:0 auto; }
+.section { padding:60px 0;position:relative;z-index:1; }
+.cat-filters { display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px; }
+.cat-btn { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;padding:8px 18px;border-radius:2px;border:1px solid var(--rivet);color:var(--smoke);background:transparent;transition:all 0.2s;cursor:pointer; }
+.cat-btn:hover { border-color:var(--smoke);color:var(--white); }
+.cat-btn.active { background:var(--rust);border-color:var(--rust);color:white; }
+.products-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:24px; }
+.prod-card { text-decoration:none;color:inherit; }
+.prod-card-inner { background:var(--plate);border:1px solid var(--rivet);border-radius:3px;overflow:hidden;transition:border-color 0.2s,transform 0.2s;height:100%;display:flex;flex-direction:column; }
+.prod-card-inner:hover { border-color:var(--rust);transform:translateY(-3px); }
+.prod-card-img { height:180px;background:var(--iron);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--rivet);font-size:60px; }
+.prod-card-body { padding:20px;flex:1; }
+.prod-card-name { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;color:var(--white);margin:8px 0; }
+.prod-card-desc { font-size:13px;color:var(--smoke);line-height:1.6; }
+.prod-card-footer { padding:12px 20px;border-top:1px solid var(--rivet);display:flex;align-items:center;justify-content:space-between; }
+@media(max-width:768px){ .products-grid { grid-template-columns:1fr; } }
+</style>
+{% endblock %}
+{% block content %}
+<div class="page-hero">
+    <div class="page-hero-content">
+        <div class="section-label">// NH Engineering & Fabricating</div>
+        <h1 class="section-title" style="margin-bottom:8px;">Our <span style="color:var(--rust)">Products</span></h1>
+        <p style="color:var(--smoke);font-size:16px;">Industrial-grade flour mills, rice mills, and prefabricated structures — manufactured in Nagpur.</p>
+    </div>
+</div>
+<section class="section">
+    <div class="container">
+        <div class="cat-filters">
+            <a href="/products" class="cat-btn {% if not active_category %}active{% endif %}">All</a>
+            {% for cat in categories %}
+            <a href="/products?category={{ cat['category'] }}" class="cat-btn {% if active_category == cat['category'] %}active{% endif %}">{{ cat['category'] }}</a>
+            {% endfor %}
+        </div>
+        {% set icons = {'Flour Mill':'🌾','Rice Mill':'🌿','Prefabricated Shed':'🏗️','Prefabricated Structures':'🏭'} %}
+        <div class="products-grid">
+            {% for product in products %}
+            <a href="/products/{{ product['id'] }}" class="prod-card">
+                <div class="prod-card-inner">
+                    <div class="prod-card-img">{{ icons.get(product['category'],'⚙️') }}</div>
+                    <div class="prod-card-body">
+                        <span class="tag">{{ product['category'] }}</span>
+                        <div class="prod-card-name">{{ product['name'] }}</div>
+                        <div class="prod-card-desc">{{ product['description'][:120] }}...</div>
+                    </div>
+                    <div class="prod-card-footer">
+                        <span style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--smoke);">View Specifications</span>
+                        <span style="color:var(--rust);font-size:18px;">→</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+            {% if not products %}
+            <div style="text-align:center;padding:80px;color:var(--smoke);grid-column:1/-1;">
+                <div style="font-size:48px;margin-bottom:16px;">🔧</div>
+                <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;color:var(--white);">No products in this category yet.</div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

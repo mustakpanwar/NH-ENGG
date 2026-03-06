@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Blog — NH Engineering{% endblock %}
+{% block extra_head %}
+<style>
+.page-hero { position:relative;z-index:1;background:var(--plate);border-bottom:1px solid var(--rivet);padding:60px 2rem;overflow:hidden; }
+.page-hero::after { content:'';position:absolute;right:0;top:0;width:50%;height:100%;background:repeating-linear-gradient(-45deg,transparent,transparent 10px,rgba(46,56,71,0.4) 10px,rgba(46,56,71,0.4) 11px); }
+.page-hero-content { position:relative;z-index:2;max-width:1200px;margin:0 auto; }
+.section { padding:60px 0;position:relative;z-index:1; }
+.blog-list { display:flex;flex-direction:column;gap:24px; }
+.blog-item { background:var(--plate);border:1px solid var(--rivet);border-radius:3px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:28px;padding:28px;text-decoration:none;color:inherit;transition:border-color 0.2s,transform 0.2s; }
+.blog-item:hover { border-color:var(--amber);transform:translateX(4px); }
+.blog-item-num { font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:48px;color:var(--rivet);line-height:1;min-width:60px;text-align:center; }
+.blog-item-date { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--smoke);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px; }
+.blog-item-title { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:24px;color:var(--white);margin-bottom:8px;line-height:1.2; }
+.blog-item-excerpt { font-size:13px;color:var(--smoke);line-height:1.6; }
+.blog-item-author { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--rust);margin-top:12px; }
+.blog-item-arrow { font-size:24px;color:var(--amber);opacity:0.5;transition:opacity 0.2s; }
+.blog-item:hover .blog-item-arrow { opacity:1; }
+</style>
+{% endblock %}
+{% block content %}
+<div class="page-hero">
+    <div class="page-hero-content">
+        <div class="section-label">// Knowledge & Insights</div>
+        <h1 class="section-title" style="margin-bottom:8px;">NH Engineering <span style="color:var(--amber)">Blog</span></h1>
+        <p style="color:var(--smoke);font-size:16px;">Industry insights, product guides, and updates from our team in Nagpur.</p>
+    </div>
+</div>
+<section class="section">
+    <div class="container">
+        {% if posts %}
+        <div class="blog-list">
+            {% for post in posts %}
+            <a href="/blog/{{ post['slug'] }}" class="blog-item">
+                <div class="blog-item-num">{{ '%02d'|format(loop.index) }}</div>
+                <div>
+                    <div class="blog-item-date">{{ post['created_at'][:10] }}</div>
+                    <div class="blog-item-title">{{ post['title'] }}</div>
+                    <div class="blog-item-excerpt">{{ post['excerpt'] or post['content'][:150] }}...</div>
+                    <div class="blog-item-author">By {{ post['author'] }}</div>
+                </div>
+                <div class="blog-item-arrow">→</div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align:center;padding:80px;color:var(--smoke);">
+            <div style="font-size:48px;margin-bottom:16px;">📝</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;color:var(--white);">No posts yet. Check back soon.</div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

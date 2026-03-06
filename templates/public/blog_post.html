@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}{{ post['title'] }} — NH Engineering Blog{% endblock %}
+{% block extra_head %}
+<style>
+.post-section { padding:60px 0;position:relative;z-index:1; }
+.post-layout { display:grid;grid-template-columns:1fr 300px;gap:48px;align-items:start; }
+.breadcrumb { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--smoke);margin-bottom:32px;display:flex;align-items:center;gap:8px; }
+.breadcrumb a { color:var(--rust);text-decoration:none; }
+.post-date { font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--smoke);text-transform:uppercase;margin-bottom:16px; }
+.post-title { font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:clamp(32px,5vw,54px);color:var(--white);line-height:1.1;margin-bottom:16px; }
+.post-author { font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--rust);margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--rivet); }
+.post-body { font-size:16px;color:var(--cloud);line-height:1.85; }
+.post-body p { margin-bottom:20px; }
+.post-body strong { color:var(--white); }
+.sidebar-box { background:var(--plate);border:1px solid var(--rivet);border-radius:3px;padding:24px;margin-bottom:24px;position:sticky;top:80px; }
+.sidebar-title { font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;color:var(--amber);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--rivet); }
+.sidebar-post { display:block;text-decoration:none;padding:12px 0;border-bottom:1px solid var(--rivet); }
+.sidebar-post:last-child { border-bottom:none; }
+.sidebar-post-title { font-size:14px;color:var(--cloud);line-height:1.4;margin-bottom:4px;transition:color 0.2s; }
+.sidebar-post:hover .sidebar-post-title { color:var(--rust); }
+.sidebar-post-date { font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--smoke); }
+@media(max-width:768px){ .post-layout { grid-template-columns:1fr; } }
+</style>
+{% endblock %}
+{% block content %}
+<section class="post-section">
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="/">Home</a> /
+            <a href="/blog">Blog</a> /
+            {{ post['title'][:40] }}...
+        </div>
+        <div class="post-layout">
+            <div>
+                <div class="post-date">{{ post['created_at'][:10] }}</div>
+                <h1 class="post-title">{{ post['title'] }}</h1>
+                <div class="post-author">By {{ post['author'] }}</div>
+                <div class="post-body">
+                    {% for para in post['content'].split('\n\n') %}
+                    <p>{{ para | replace('**', '<strong>') | safe }}</p>
+                    {% endfor %}
+                </div>
+                <div style="margin-top:48px;padding-top:24px;border-top:1px solid var(--rivet);display:flex;gap:12px;">
+                    <a href="/blog" class="btn-secondary">← All Articles</a>
+                    <a href="/contact" class="btn-primary">Get in Touch</a>
+                </div>
+            </div>
+            <div>
+                <div class="sidebar-box">
+                    <div class="sidebar-title">Recent Articles</div>
+                    {% for r in recent %}
+                    <a href="/blog/{{ r['slug'] }}" class="sidebar-post">
+                        <div class="sidebar-post-title">{{ r['title'] }}</div>
+                        <div class="sidebar-post-date">{{ r['created_at'][:10] }}</div>
+                    </a>
+                    {% endfor %}
+                </div>
+                <div class="sidebar-box">
+                    <div class="sidebar-title">Our Products</div>
+                    <a href="/products?category=Flour+Mill" class="sidebar-post"><div class="sidebar-post-title">Flour Mill Plants</div></a>
+                    <a href="/products?category=Rice+Mill" class="sidebar-post"><div class="sidebar-post-title">Rice Mill Plants</div></a>
+                    <a href="/products?category=Prefabricated+Shed" class="sidebar-post"><div class="sidebar-post-title">Prefabricated Sheds</div></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

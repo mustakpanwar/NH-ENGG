@@ -1,0 +1,83 @@
+{% extends "admin/base_admin.html" %}
+{% block title %}{{ action }} Product{% endblock %}
+{% block page_title %}{{ action }} Product{% endblock %}
+{% block extra_head %}
+<style>
+.specs-section { margin-top:8px; }
+.spec-row { display:grid;grid-template-columns:1fr 1fr auto;gap:10px;margin-bottom:10px;align-items:center; }
+.spec-row input { margin:0; }
+.remove-spec { background:transparent;border:1px solid rgba(224,92,92,0.3);color:#e05c5c;padding:8px 12px;border-radius:2px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px; }
+.remove-spec:hover { background:rgba(224,92,92,0.1); }
+.add-spec-btn { background:transparent;border:1px dashed var(--rivet);color:var(--smoke);padding:8px 16px;border-radius:2px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;transition:all 0.2s; }
+.add-spec-btn:hover { border-color:var(--smoke);color:var(--white); }
+</style>
+{% endblock %}
+{% block content %}
+<div style="margin-bottom:16px;">
+    <a href="/admin/products" class="btn btn-secondary btn-sm">← Back to Products</a>
+</div>
+<div class="form-card">
+    <form method="POST">
+        <div class="form-group">
+            <label class="form-label">Product Name *</label>
+            <input class="form-input" type="text" name="name" value="{{ product['name'] if product else '' }}" required placeholder="e.g. Commercial Flour Mill Plant">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Category *</label>
+            <select class="form-select" name="category" required>
+                <option value="">Select category...</option>
+                {% set cats = ['Flour Mill','Rice Mill','Prefabricated Shed','Prefabricated Structures'] %}
+                {% for c in cats %}
+                <option value="{{ c }}" {% if product and product['category'] == c %}selected{% endif %}>{{ c }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Description</label>
+            <textarea class="form-textarea" name="description" placeholder="Describe the product, its use case, and key features...">{{ product['description'] if product else '' }}</textarea>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Image URL (optional)</label>
+            <input class="form-input" type="url" name="image_url" value="{{ product['image_url'] if product else '' }}" placeholder="https://...">
+        </div>
+        <div class="form-group">
+            <label class="form-label">Technical Specifications</label>
+            <div class="specs-section" id="specs-container">
+                {% if specs %}
+                {% for key, val in specs.items() %}
+                <div class="spec-row">
+                    <input class="form-input" type="text" name="spec_key" value="{{ key }}" placeholder="e.g. Voltage">
+                    <input class="form-input" type="text" name="spec_val" value="{{ val }}" placeholder="e.g. 220-380V">
+                    <button type="button" class="remove-spec" onclick="this.parentElement.remove()">✕</button>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="spec-row">
+                    <input class="form-input" type="text" name="spec_key" placeholder="e.g. Material">
+                    <input class="form-input" type="text" name="spec_val" placeholder="e.g. Mild Steel">
+                    <button type="button" class="remove-spec" onclick="this.parentElement.remove()">✕</button>
+                </div>
+                {% endif %}
+            </div>
+            <button type="button" class="add-spec-btn" onclick="addSpec()" style="margin-top:8px;">+ Add Specification</button>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">{{ action }} Product</button>
+            <a href="/admin/products" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+<script>
+function addSpec() {
+    const container = document.getElementById('specs-container');
+    const row = document.createElement('div');
+    row.className = 'spec-row';
+    row.innerHTML = `
+        <input class="form-input" type="text" name="spec_key" placeholder="e.g. Capacity">
+        <input class="form-input" type="text" name="spec_val" placeholder="e.g. 40-100 Ton/Day">
+        <button type="button" class="remove-spec" onclick="this.parentElement.remove()">✕</button>
+    `;
+    container.appendChild(row);
+}
+</script>
+{% endblock %}

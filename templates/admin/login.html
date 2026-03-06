@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login — NH Engineering</title>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Barlow:wght@400;500&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root { --iron:#0d1117;--plate:#232b3a;--rivet:#2e3847;--rust:#c94a1a;--cloud:#c8d4e3;--smoke:#8a9bb0;--white:#f0f4f8; }
+        *,*::before,*::after { box-sizing:border-box;margin:0;padding:0; }
+        body { font-family:'Barlow',sans-serif;background:var(--iron);color:var(--cloud);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px; }
+        body::before { content:'';position:fixed;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 49px,rgba(46,56,71,0.3) 49px,rgba(46,56,71,0.3) 50px),repeating-linear-gradient(90deg,transparent,transparent 49px,rgba(46,56,71,0.3) 49px,rgba(46,56,71,0.3) 50px);pointer-events:none; }
+        .login-box { background:var(--plate);border:1px solid var(--rivet);border-radius:3px;padding:48px;width:100%;max-width:400px;position:relative;z-index:1;border-top:3px solid var(--rust); }
+        .login-logo { display:flex;align-items:center;gap:12px;margin-bottom:32px; }
+        .login-logo-mark { width:42px;height:42px;background:var(--rust);clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:14px;color:white; }
+        .login-brand-name { font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:20px;color:var(--white); }
+        .login-brand-sub { font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--rust);letter-spacing:2px; }
+        h1 { font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:28px;color:var(--white);margin-bottom:4px; }
+        p { color:var(--smoke);font-size:13px;margin-bottom:28px; }
+        .form-group { margin-bottom:18px; }
+        label { font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--smoke);display:block;margin-bottom:8px; }
+        input { width:100%;background:var(--iron);border:1px solid var(--rivet);border-radius:2px;padding:12px 14px;color:var(--cloud);font-family:'Barlow',sans-serif;font-size:15px;outline:none;transition:border-color 0.2s; }
+        input:focus { border-color:var(--rust); }
+        button { width:100%;background:var(--rust);color:white;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:2px;text-transform:uppercase;padding:13px;border:none;border-radius:2px;cursor:pointer;margin-top:8px;transition:background 0.2s; }
+        button:hover { background:#e05c28; }
+        .error { background:rgba(201,74,26,0.1);border:1px solid rgba(201,74,26,0.3);color:#e08060;padding:10px 14px;border-radius:2px;font-size:13px;margin-bottom:18px; }
+        .back-link { text-align:center;margin-top:20px; }
+        .back-link a { font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--smoke);text-decoration:none; }
+        .back-link a:hover { color:var(--rust); }
+    </style>
+</head>
+<body>
+<div class="login-box">
+    <div class="login-logo">
+        <div class="login-logo-mark">NH</div>
+        <div>
+            <div class="login-brand-name">NH Engineering</div>
+            <div class="login-brand-sub">// Admin Panel</div>
+        </div>
+    </div>
+    <h1>Sign In</h1>
+    <p>Enter your credentials to access the CMS.</p>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for msg in messages %}
+    <div class="error">⚠ {{ msg }}</div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <form method="POST">
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" name="username" placeholder="admin" required autofocus>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" placeholder="••••••••" required>
+        </div>
+        <button type="submit">Access Panel →</button>
+    </form>
+    <div class="back-link"><a href="/">← Back to Website</a></div>
+</div>
+</body>
+</html>
