@@ -5,8 +5,8 @@ from functools import wraps
 
 app = Flask(__name__)
 app.secret_key = 'nh-engineering-secret-2024-nagpur'
-DATABASE = os.path.join(os.path.dirname(__file__), 'nh_engineering.db')
-
+#DATABASE = os.path.join(os.path.dirname(__file__), 'nh_engineering.db')*/
+DATABASE = '/tmp/nh_engineering.db'
 # ─── DB HELPERS ────────────────────────────────────────────────────────────────
 
 def get_db():
