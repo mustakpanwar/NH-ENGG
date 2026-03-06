@@ -4,6 +4,7 @@ from datetime import datetime
 from functools import wraps
 
 app = Flask(__name__)
+app.config['DEBUG'] = True 
 app.secret_key = 'nh-engineering-secret-2024-nagpur'
 #DATABASE = os.path.join(os.path.dirname(__file__), 'nh_engineering.db')*/
 DATABASE = '/tmp/nh_engineering.db'
