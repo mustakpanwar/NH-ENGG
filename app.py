@@ -1,12 +1,30 @@
+#from flask import Flask, render_template, request, redirect, url_for, session, flash, g
+#import sqlite3, hashlib, os, json
+#from datetime import datetime
+#from functools import wraps
+
+#app = Flask(__name__)
+#app.config['DEBUG'] = True 
+#app.secret_key = 'nh-engineering-secret-2024-nagpur'
+#DATABASE = os.path.join(os.path.dirname(__file__), 'nh_engineering.db')*/
+#DATABASE = '/tmp/nh_engineering.db'
+
+
+
 from flask import Flask, render_template, request, redirect, url_for, session, flash, g
 import sqlite3, hashlib, os, json
 from datetime import datetime
 from functools import wraps
 
-app = Flask(__name__)
-app.config['DEBUG'] = True 
+# Fix paths for Vercel
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+app = Flask(__name__,
+    template_folder=os.path.join(BASE_DIR, 'templates'),
+    static_folder=os.path.join(BASE_DIR, 'static')
+)
+
 app.secret_key = 'nh-engineering-secret-2024-nagpur'
-#DATABASE = os.path.join(os.path.dirname(__file__), 'nh_engineering.db')*/
 DATABASE = '/tmp/nh_engineering.db'
 # ─── DB HELPERS ────────────────────────────────────────────────────────────────
 
