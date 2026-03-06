@@ -23,7 +23,7 @@ app = Flask(__name__,
     template_folder=os.path.join(BASE_DIR, 'templates'),
     static_folder=os.path.join(BASE_DIR, 'static')
 )
-
+app.config['DEBUG'] = True 
 app.secret_key = 'nh-engineering-secret-2024-nagpur'
 DATABASE = '/tmp/nh_engineering.db'
 # ─── DB HELPERS ────────────────────────────────────────────────────────────────
