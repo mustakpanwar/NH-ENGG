@@ -92,17 +92,90 @@ def init_db():
             db.commit()
 
         # Seed products if empty
+        # Seed products if empty
         count = db.execute("SELECT COUNT(*) FROM products").fetchone()[0]
         if count == 0:
             products = [
-                ('Commercial Flour Mill Plant', 'Flour Mill', 'High-capacity commercial flour mill plant built for consistent output and reliability. Suitable for medium to large milling operations.', json.dumps({'Material':'Mild Steel','Capacity':'40-100 Ton/Day','Operation':'Semi-Automatic','Voltage':'220-380V','Phase':'Three Phase','Power':'1-5 HP'}), ''),
-                ('Fully Automatic Flour Mill Plant', 'Flour Mill', 'Fully automated flour milling solution with minimal human intervention. Ideal for high-volume industrial production.', json.dumps({'Material':'Mild Steel','Capacity':'>100 Ton/Day','Voltage':'220-380V','Motor Speed':'1400 RPM','Phase':'Three Phase','Finishing':'Powder Coated'}), ''),
-                ('Roller Flour Mill Plant', 'Flour Mill', 'Roller-based flour mill offering precise grain grinding, consistent flour quality, and energy-efficient operation.', json.dumps({'Power':'1-5 HP','Operation':'Automatic','Capacity':'40-100 Ton/Day','Motor Speed':'1400 RPM','Phase':'Three Phase'}), ''),
-                ('Mini Flour Mill Plant', 'Flour Mill', 'Compact flour mill plant for small-scale operations, easy to set up and maintain.', json.dumps({'Material':'Mild Steel','Operation':'Semi-Automatic','Capacity':'>100 Ton/Day','Phase':'Three Phase','Motor Speed':'800-1400 RPM'}), ''),
-                ('Industrial Prefabricated Shed', 'Prefabricated Shed', 'Robust and durable prefabricated sheds for industrial use. Fast installation, weather-resistant structure.', json.dumps({'Type':'Industrial','Structure':'Steel Frame','Customizable':'Yes','Installation':'Quick Assembly'}), ''),
-                ('Warehouse Prefabricated Shed', 'Prefabricated Shed', 'Large-span warehouse sheds designed for maximum storage space with optimal load-bearing capacity.', json.dumps({'Type':'Warehouse','Span':'Customizable','Roofing':'Color Coated Sheets','Foundation':'As per requirement'}), ''),
-                ('Fully Automatic Rice Mill Plant', 'Rice Mill', 'End-to-end automated rice milling plant from paddy cleaning to finished rice output. Low maintenance, high output.', json.dumps({'Operation':'Fully Automatic','Capacity':'Commercial','Power Source':'Electric','Phase':'Three Phase'}), ''),
-                ('Commercial Rice Mill Plant', 'Rice Mill', 'Designed for commercial rice processing with high throughput and excellent grain quality.', json.dumps({'Operation':'Semi-Automatic','Capacity':'Commercial','Power Source':'Electric','Phase':'Three Phase'}), ''),
+                # ── FLOUR MILL ──────────────────────────────────────────
+                ('Commercial Flour Mill Plant (Atta Chakki Plant)', 'Flour Mill',
+                 'High-capacity commercial wheat flour mill plant built for consistent output and reliability. Suitable for medium to large milling operations across towns and cities. Designed for processing wheat into fine atta with minimal power consumption.',
+                 json.dumps({'Material':'Mild Steel','Capacity':'40-100 Ton/Day','Operation':'Semi-Automatic','Voltage':'220-380V','Phase':'Three Phase','Power':'1-5 HP','Finishing':'Powder Coated'}), ''),
+
+                ('Fully Automatic Roller Flour Mill Plant', 'Flour Mill',
+                 'Fully automated roller flour milling solution with minimal human intervention. Ideal for high-volume industrial wheat processing. Features precision roller grinding for consistent flour quality and high extraction rates.',
+                 json.dumps({'Material':'Mild Steel','Capacity':'>100 Ton/Day','Operation':'Fully Automatic','Voltage':'220-380V','Motor Speed':'1400 RPM','Phase':'Three Phase','Finishing':'Powder Coated'}), ''),
+
+                ('Mini Flour Mill Plant', 'Flour Mill',
+                 'Compact and affordable flour mill plant for small-scale operations, village-level businesses, and rural entrepreneurs. Easy to install, operate, and maintain with low power requirement.',
+                 json.dumps({'Material':'Mild Steel','Operation':'Semi-Automatic','Capacity':'10-40 Ton/Day','Phase':'Three Phase','Motor Speed':'800-1400 RPM','Power':'1-3 HP'}), ''),
+
+                ('Maize / Corn Flour Mill Plant', 'Flour Mill',
+                 'Specialized flour milling plant for processing maize and corn into fine flour. Used for producing corn flour, maize atta, and animal feed grade flour. Robust construction for continuous operation.',
+                 json.dumps({'Raw Material':'Maize / Corn','Capacity':'20-80 Ton/Day','Operation':'Semi-Automatic','Phase':'Three Phase','Voltage':'220-380V','Material':'Mild Steel'}), ''),
+
+                ('Millet Flour Mill Plant', 'Flour Mill',
+                 'Multi-purpose millet processing plant capable of handling jowar, bajra, ragi, and other millets. Growing demand from health food sector makes this a profitable investment. Low maintenance, high throughput.',
+                 json.dumps({'Raw Material':'Jowar / Bajra / Ragi','Capacity':'20-60 Ton/Day','Operation':'Semi-Automatic','Phase':'Three Phase','Voltage':'220-380V','Material':'Mild Steel'}), ''),
+
+                # ── RICE MILL ───────────────────────────────────────────
+                ('Fully Automatic Rice Mill Plant', 'Rice Mill',
+                 'End-to-end automated rice milling plant from paddy cleaning to polished rice output. Features multiple stages including pre-cleaner, husker, separator, whitener, and grader. Low maintenance, high output with excellent head rice recovery.',
+                 json.dumps({'Operation':'Fully Automatic','Capacity':'2-10 Ton/Hour','Power Source':'Electric','Phase':'Three Phase','Stages':'Cleaning, Husking, Separating, Whitening, Grading','Material':'Mild Steel'}), ''),
+
+                ('Commercial Rice Mill Plant', 'Rice Mill',
+                 'Designed for commercial paddy processing with high throughput and excellent grain quality. Semi-automatic operation allows skilled operators to maximize output. Suitable for medium-scale rice mills across Maharashtra and Central India.',
+                 json.dumps({'Operation':'Semi-Automatic','Capacity':'1-5 Ton/Hour','Power Source':'Electric','Phase':'Three Phase','Material':'Mild Steel','Finishing':'Powder Coated'}), ''),
+
+                # ── DAL MILL ────────────────────────────────────────────
+                ('Dal Mill Plant (Multi Purpose)', 'Dal Mill',
+                 'Versatile multi-purpose dal processing plant capable of handling urad, moong, masoor, chana, toor, and other pulses. Complete turnkey solution from raw pulse cleaning to finished split dal. Ideal for processors handling multiple pulse varieties.',
+                 json.dumps({'Raw Material':'Urad, Moong, Masoor, Chana, Toor','Capacity':'5-50 Ton/Day','Operation':'Semi-Automatic','Phase':'Three Phase','Voltage':'220-380V','Material':'Mild Steel'}), ''),
+
+                ('Green Gram Processing Plant (Moong)', 'Dal Mill',
+                 'Specialized processing plant for green gram (moong). Produces whole moong, moong dal (split), and moong fara (dehusked). High yield extraction with minimal breakage. Popular among traders in Vidarbha and Marathwada regions.',
+                 json.dumps({'Raw Material':'Green Gram (Moong)','Output':'Moong Dal / Moong Fara','Capacity':'5-30 Ton/Day','Operation':'Semi-Automatic','Phase':'Three Phase','Material':'Mild Steel'}), ''),
+
+                ('Chickpeas & Peas Processing Plant (Chana/Matar)', 'Dal Mill',
+                 'Dedicated plant for processing chana (chickpeas) and matar (peas) into besan-grade splits and whole dal. Features efficient dehusking and splitting mechanism for high-quality output suitable for retail and wholesale markets.',
+                 json.dumps({'Raw Material':'Chana / Matar','Output':'Chana Dal / Besan Grade','Capacity':'5-40 Ton/Day','Operation':'Semi-Automatic','Phase':'Three Phase','Material':'Mild Steel'}), ''),
+
+                ('Pigeon Pea Processing Plant (Toor Dal)', 'Dal Mill',
+                 'High-efficiency toor (arhar) dal processing plant. One of the most consumed pulses in India — toor dal processing is a highly profitable business. Our plant ensures maximum yield with minimal waste and consistent quality output.',
+                 json.dumps({'Raw Material':'Toor / Arhar','Output':'Toor Dal (Split)','Capacity':'5-50 Ton/Day','Operation':'Semi-Automatic','Phase':'Three Phase','Material':'Mild Steel'}), ''),
+
+                ('Black Gram Processing Plant (Urad Dal)', 'Dal Mill',
+                 'Specialized urad dal processing plant for producing whole urad, urad dal, and urad gota. Essential for papad and snack food manufacturers. High extraction ratio ensures maximum profitability per ton of raw material.',
+                 json.dumps({'Raw Material':'Black Gram (Urad)','Output':'Urad Dal / Urad Gota','Capacity':'5-40 Ton/Day','Operation':'Semi-Automatic','Phase':'Three Phase','Material':'Mild Steel'}), ''),
+
+                ('Red Lentil Processing Plant (Masoor Dal)', 'Dal Mill',
+                 'Processing plant dedicated to masoor (red lentil) dal production. Masoor is one of the fastest-growing pulse categories in domestic and export markets. Plant includes cleaning, dehusking, splitting, and grading sections.',
+                 json.dumps({'Raw Material':'Masoor (Red Lentil)','Output':'Masoor Dal (Split)','Capacity':'5-30 Ton/Day','Operation':'Semi-Automatic','Phase':'Three Phase','Material':'Mild Steel'}), ''),
+
+                # ── PREFABRICATED SHED ──────────────────────────────────
+                ('Industrial Prefabricated Shed', 'Prefabricated Shed',
+                 'Robust and durable prefabricated steel sheds for industrial use. Fast installation, weather-resistant structure engineered for heavy machinery, manufacturing units, and workshops. Available in custom sizes with optional mezzanine floors.',
+                 json.dumps({'Type':'Industrial','Structure':'Steel Frame','Roofing':'Color Coated Sheets','Customizable':'Yes','Installation':'Quick Assembly','Foundation':'RCC as per soil report'}), ''),
+
+                ('Warehouse Prefabricated Shed', 'Prefabricated Shed',
+                 'Large-span warehouse sheds designed for maximum storage space with optimal load-bearing capacity. Suitable for logistics, cold storage support structures, grain storage, and e-commerce warehouses. Column-free interior available.',
+                 json.dumps({'Type':'Warehouse / Storage','Span':'Up to 30m column-free','Roofing':'Color Coated Sheets','Wall Cladding':'Optional','Customizable':'Yes','Installation':'4-8 weeks'}), ''),
+
+                ('Factory & Commercial Prefabricated Shed', 'Prefabricated Shed',
+                 'Purpose-built prefabricated sheds for factories, showrooms, and commercial establishments. Combines speed of construction with architectural flexibility. Lower cost than conventional construction with better longevity.',
+                 json.dumps({'Type':'Factory / Commercial','Structure':'Steel Frame + Cladding','Customizable':'Yes','Finish':'Painted / Galvanized','Installation':'Quick Assembly','Certifications':'As per IS standards'}), ''),
+
+                # ── CLEANING & SORTING ──────────────────────────────────
+                ('Sorter / Sortex Cleaning Plant', 'Cleaning & Sorting',
+                 'Advanced optical and mechanical sorting and cleaning plant for grains, pulses, and spices. Removes foreign materials, damaged grains, discolored seeds, and impurities to produce market-grade cleaned commodity.',
+                 json.dumps({'Application':'Grains, Pulses, Spices','Technology':'Mechanical + Optical','Capacity':'2-20 Ton/Hour','Phase':'Three Phase','Material':'Mild Steel','Output':'Market Grade Clean Commodity'}), ''),
+
+                ('Grader Cleaning Plant', 'Cleaning & Sorting',
+                 'Precision grading and cleaning plant that separates commodities by size, weight, and quality. Essential for export-quality grain and pulse processing. Produces uniform grade output for premium market pricing.',
+                 json.dumps({'Application':'Grains, Pulses','Function':'Size & Weight Grading','Capacity':'2-15 Ton/Hour','Phase':'Three Phase','Material':'Mild Steel','Output':'Uniform Grade Commodity'}), ''),
+
+                ('Cleaning & Polishing Plant', 'Cleaning & Sorting',
+                 'Combined cleaning and surface polishing plant for rice, dal, and spices. Produces shiny, market-ready product with improved shelf life and consumer appeal. Used by leading rice and dal processors across Central India.',
+                 json.dumps({'Application':'Rice, Dal, Spices','Function':'Cleaning + Polishing','Capacity':'1-10 Ton/Hour','Phase':'Three Phase','Material':'Mild Steel','Output':'Polished Market-Ready Product'}), ''),
             ]
             for p in products:
                 db.execute("INSERT INTO products (name,category,description,specs,image_url) VALUES (?,?,?,?,?)", p)
