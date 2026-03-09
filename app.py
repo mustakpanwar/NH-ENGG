@@ -380,6 +380,8 @@ def admin_change_password():
             return redirect(url_for('admin_dashboard'))
     return render_template('admin/change_password.html')
 
+# Initialize DB on every startup (works with Gunicorn + local)
+init_db()
+
 if __name__ == '__main__':
-    init_db()
     app.run(debug=True, port=5050)
