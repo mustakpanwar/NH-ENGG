@@ -8,49 +8,269 @@
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --steel: #1a1f2e; --iron: #0d1117; --rust: #c94a1a; --rust-light: #e05c28;
-            --amber: #f0a500; --smoke: #8a9bb0; --cloud: #c8d4e3; --white: #f0f4f8;
-            --plate: #232b3a; --rivet: #2e3847; --glow: rgba(201,74,26,0.15);
+            --steel: #1a1f2e;
+            --iron: #0d1117;
+            --rust: #c94a1a;
+            --rust-light: #e05c28;
+            --amber: #f0a500;
+            --smoke: #8a9bb0;
+            --cloud: #c8d4e3;
+            --white: #f0f4f8;
+            --plate: #232b3a;
+            --rivet: #2e3847;
+            --glow: rgba(201,74,26,0.15);
         }
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Barlow', sans-serif; background: var(--iron); color: var(--cloud); min-height: 100vh; overflow-x: hidden; }
-        body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%230d1117'/%3E%3Crect width='1' height='1' fill='%23161c28' x='0' y='0'/%3E%3Crect width='1' height='1' fill='%23161c28' x='2' y='2'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.6; }
-        nav { position: sticky; top: 0; z-index: 1000; background: rgba(13,17,23,0.97); backdrop-filter: blur(10px); border-bottom: 2px solid var(--rust); padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 64px; }
-        .nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-        .nav-logo-mark { width: 38px; height: 38px; background: var(--rust); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; align-items: center; justify-content: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 14px; color: white; flex-shrink: 0; }
-        .nav-brand-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 18px; color: var(--white); }
-        .nav-brand-sub { font-family: 'Share Tech Mono', monospace; font-size: 9px; color: var(--rust); letter-spacing: 2px; text-transform: uppercase; }
-        .nav-links { display: flex; align-items: center; }
-        .nav-links a { font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--smoke); text-decoration: none; padding: 0 16px; height: 64px; display: flex; align-items: center; border-bottom: 3px solid transparent; transition: all 0.2s; position: relative; top: 1px; }
-        .nav-links a:hover, .nav-links a.active { color: var(--white); border-bottom-color: var(--rust); }
-        .nav-cta { background: var(--rust) !important; color: white !important; border-bottom-color: transparent !important; margin-left: 8px; top: 0 !important; border-radius: 2px; }
+        body {
+            font-family: 'Barlow', sans-serif;
+            background: var(--iron);
+            color: var(--cloud);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        /* Texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Crect width='4' height='4' fill='%230d1117'/%3E%3Crect width='1' height='1' fill='%23161c28' x='0' y='0'/%3E%3Crect width='1' height='1' fill='%23161c28' x='2' y='2'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6;
+        }
+        /* NAV */
+        nav {
+            position: sticky; top: 0; z-index: 1000;
+            background: rgba(13,17,23,0.97);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--rust);
+            padding: 0 2rem;
+            display: flex; align-items: center; justify-content: space-between;
+            height: 64px;
+        }
+        .nav-brand {
+            display: flex; align-items: center; gap: 12px;
+            text-decoration: none;
+        }
+        .nav-logo-mark {
+            width: 38px; height: 38px;
+            background: var(--rust);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800; font-size: 14px; color: white;
+            flex-shrink: 0;
+        }
+        .nav-brand-text { line-height: 1.1; }
+        .nav-brand-name {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800; font-size: 18px;
+            color: var(--white); letter-spacing: 0.5px;
+        }
+        .nav-brand-sub {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 9px; color: var(--rust); letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .nav-links { display: flex; align-items: center; gap: 0; }
+        .nav-links a {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 600; font-size: 14px;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--smoke); text-decoration: none;
+            padding: 0 16px; height: 64px;
+            display: flex; align-items: center;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            position: relative; top: 1px;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--white);
+            border-bottom-color: var(--rust);
+        }
+        .nav-cta {
+            background: var(--rust) !important;
+            color: white !important;
+            border-bottom-color: transparent !important;
+            margin-left: 8px; top: 0 !important;
+            border-radius: 2px;
+        }
         .nav-cta:hover { background: var(--rust-light) !important; }
-        footer { background: var(--iron); border-top: 2px solid var(--rivet); padding: 48px 2rem 24px; position: relative; z-index: 1; margin-top: 80px; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; max-width: 1200px; margin: 0 auto 40px; }
-        .footer-brand-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 22px; color: var(--white); margin-bottom: 4px; }
-        .footer-brand-tag { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--rust); letter-spacing: 2px; margin-bottom: 16px; }
+
+        /* FOOTER */
+        footer {
+            background: var(--iron);
+            border-top: 2px solid var(--rivet);
+            padding: 48px 2rem 24px;
+            position: relative; z-index: 1;
+            margin-top: 80px;
+        }
+        .footer-grid {
+            display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px; max-width: 1200px; margin: 0 auto 40px;
+        }
+        .footer-brand-name {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800; font-size: 22px; color: var(--white);
+            margin-bottom: 4px;
+        }
+        .footer-brand-tag {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px; color: var(--rust); letter-spacing: 2px; margin-bottom: 16px;
+        }
         .footer-desc { font-size: 14px; color: var(--smoke); line-height: 1.7; }
-        .footer-col h4 { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 2px; text-transform: uppercase; color: var(--amber); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--rivet); }
-        .footer-col a { display: block; color: var(--smoke); text-decoration: none; font-size: 14px; margin-bottom: 8px; transition: color 0.2s; }
+        .footer-col h4 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700; font-size: 13px; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--amber);
+            margin-bottom: 16px;
+            padding-bottom: 8px; border-bottom: 1px solid var(--rivet);
+        }
+        .footer-col a {
+            display: block; color: var(--smoke); text-decoration: none;
+            font-size: 14px; margin-bottom: 8px; transition: color 0.2s;
+        }
         .footer-col a:hover { color: var(--rust); }
-        .footer-contact-item { display: flex; gap: 10px; margin-bottom: 12px; font-size: 13px; color: var(--smoke); line-height: 1.5; }
+        .footer-contact-item {
+            display: flex; gap: 10px; margin-bottom: 12px;
+            font-size: 13px; color: var(--smoke); line-height: 1.5;
+        }
         .footer-contact-icon { color: var(--rust); font-size: 16px; flex-shrink: 0; margin-top: 1px; }
-        .footer-bottom { border-top: 1px solid var(--rivet); padding-top: 24px; text-align: center; font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--rivet); max-width: 1200px; margin: 0 auto; }
+        .footer-bottom {
+            border-top: 1px solid var(--rivet);
+            padding-top: 24px; text-align: center;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px; color: var(--rivet);
+            max-width: 1200px; margin: 0 auto;
+        }
         .footer-bottom span { color: var(--rust); }
+
+        /* FLASH MESSAGES */
         .flash-messages { position: fixed; top: 72px; right: 20px; z-index: 999; }
-        .flash-msg { background: var(--plate); border-left: 4px solid var(--rust); padding: 12px 20px; margin-bottom: 8px; border-radius: 2px; font-size: 14px; color: var(--cloud); box-shadow: 0 4px 20px rgba(0,0,0,0.4); animation: slideIn 0.3s ease; max-width: 320px; }
+        .flash-msg {
+            background: var(--plate);
+            border-left: 4px solid var(--rust);
+            padding: 12px 20px; margin-bottom: 8px;
+            border-radius: 2px; font-size: 14px; color: var(--cloud);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            animation: slideIn 0.3s ease;
+            max-width: 320px;
+        }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: none; opacity: 1; } }
+
+        /* UTILITIES */
         .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        .section-label { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--rust); text-transform: uppercase; margin-bottom: 10px; }
-        .section-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 42px; line-height: 1; color: var(--white); }
-        .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--rust); color: white; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; padding: 12px 24px; border-radius: 2px; border: none; cursor: pointer; transition: background 0.2s, transform 0.1s; }
+        .section-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 11px; letter-spacing: 3px; color: var(--rust);
+            text-transform: uppercase; margin-bottom: 10px;
+        }
+        .section-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800; font-size: 42px; line-height: 1;
+            color: var(--white);
+        }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--rust); color: white;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700; font-size: 14px; letter-spacing: 1.5px;
+            text-transform: uppercase; text-decoration: none;
+            padding: 12px 24px; border-radius: 2px;
+            border: none; cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
         .btn-primary:hover { background: var(--rust-light); transform: translateY(-1px); }
-        .btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--cloud); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; padding: 11px 24px; border-radius: 2px; border: 1px solid var(--rivet); cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: transparent; color: var(--cloud);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 700; font-size: 14px; letter-spacing: 1.5px;
+            text-transform: uppercase; text-decoration: none;
+            padding: 11px 24px; border-radius: 2px;
+            border: 1px solid var(--rivet); cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+        }
         .btn-secondary:hover { border-color: var(--smoke); color: var(--white); }
-        .tag { font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; background: var(--glow); color: var(--rust); padding: 3px 10px; border-radius: 1px; border: 1px solid rgba(201,74,26,0.3); display: inline-block; }
-        .divider { height: 1px; background: linear-gradient(90deg, transparent, var(--rivet), transparent); margin: 48px 0; }
-        @media (max-width: 768px) { .footer-grid { grid-template-columns: 1fr 1fr; } .nav-links { display: none; } .section-title { font-size: 30px; } }
+        .card {
+            background: var(--plate);
+            border: 1px solid var(--rivet);
+            border-radius: 3px;
+            overflow: hidden;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .card:hover { border-color: var(--rust); transform: translateY(-2px); }
+        .tag {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+            background: var(--glow); color: var(--rust);
+            padding: 3px 10px; border-radius: 1px;
+            border: 1px solid rgba(201,74,26,0.3);
+            display: inline-block;
+        }
+        .divider {
+            height: 1px; background: linear-gradient(90deg, transparent, var(--rivet), transparent);
+            margin: 48px 0;
+        }
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            padding: 4px;
+            background: transparent;
+            border: none;
+            z-index: 1001;
+        }
+        .hamburger span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: var(--cloud);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .section-title { font-size: 30px; }
+            .hamburger { display: flex; }
+            .nav-links {
+                display: none;
+                position: fixed;
+                top: 64px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: var(--iron);
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0;
+                z-index: 1000;
+                padding: 16px 0;
+                border-top: 1px solid var(--rivet);
+                overflow-y: auto;
+            }
+            .nav-links.open { display: flex; }
+            .nav-links a {
+                width: 100%;
+                padding: 16px 24px !important;
+                height: auto !important;
+                font-size: 16px !important;
+                border-bottom: 1px solid var(--rivet);
+            }
+            .nav-links .nav-cta {
+                margin: 16px 24px;
+                width: calc(100% - 48px);
+                text-align: center;
+            }
+        }
     </style>
     {% block extra_head %}{% endblock %}
 </head>
@@ -58,27 +278,60 @@
 <nav>
     <a href="/" class="nav-brand">
         <div class="nav-logo-mark">NH</div>
-        <div>
+        <div class="nav-brand-text">
             <div class="nav-brand-name">NH Engineering</div>
             <div class="nav-brand-sub">Est. 2002 · Nagpur</div>
         </div>
     </a>
-    <div class="nav-links">
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="nav-links">
         <a href="/" class="{% if request.endpoint == 'home' %}active{% endif %}">Home</a>
         <a href="/products" class="{% if request.endpoint in ['products','product_detail'] %}active{% endif %}">Products</a>
         <a href="/blog" class="{% if request.endpoint in ['blog','blog_post'] %}active{% endif %}">Blog</a>
         <a href="/about" class="{% if request.endpoint == 'about' %}active{% endif %}">About</a>
+        <a href="tel:+919999999999" style="display:flex;align-items:center;gap:6px;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--smoke);text-decoration:none;padding:0 16px;height:64px;letter-spacing:1px;">📞 +91 99999 99999</a>
         <a href="/contact" class="nav-cta">Contact Us</a>
     </div>
 </nav>
+<script>
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        navLinks.classList.toggle('open');
+        document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : '';
+    });
+    // Close menu when a link is clicked
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('open');
+            navLinks.classList.remove('open');
+            document.body.style.overflow = '';
+        });
+    });
+</script>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+<a href="https://wa.me/919999999999?text=Hi%2C%20I%20am%20interested%20in%20your%20products.%20Please%20send%20me%20a%20quotation." target="_blank"
+   style="position:fixed;bottom:28px;right:28px;z-index:9999;background:#25D366;color:white;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,0.4);transition:transform 0.2s;"
+   onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+    💬
+</a>
+
 {% with messages = get_flashed_messages() %}
 {% if messages %}
 <div class="flash-messages">
-    {% for msg in messages %}<div class="flash-msg">{{ msg }}</div>{% endfor %}
+    {% for msg in messages %}
+    <div class="flash-msg">{{ msg }}</div>
+    {% endfor %}
 </div>
 {% endif %}
 {% endwith %}
+
 {% block content %}{% endblock %}
+
 <footer>
     <div class="footer-grid">
         <div>
@@ -102,16 +355,27 @@
         </div>
         <div class="footer-col">
             <h4>Contact</h4>
-            <div class="footer-contact-item"><span class="footer-contact-icon">📍</span><span>Kh No 4/2 Kapsi, Bhandara Road, Near Ali Bhai Petrol Pump, Nagpur – 440008</span></div>
-            <div class="footer-contact-item"><span class="footer-contact-icon">👤</span><span>Mr. Naushad Haji Khan</span></div>
+            <div class="footer-contact-item">
+                <span class="footer-contact-icon">📍</span>
+                <span>Kh No 4/2 Kapsi, Bhandara Road, Near Ali Bhai Petrol Pump, Nagpur – 440008</span>
+            </div>
+            <div class="footer-contact-item">
+                <span class="footer-contact-icon">👤</span>
+                <span>Mr. Naushad Haji Khan</span>
+            </div>
         </div>
     </div>
-    <div class="footer-bottom">© <span>NH Engineering & Fabricating</span> · All rights reserved · Nagpur, Maharashtra</div>
+    <div class="footer-bottom">
+        © <span>NH Engineering & Fabricating</span> · All rights reserved · Nagpur, Maharashtra
+    </div>
 </footer>
+
 <script>
+// Auto-dismiss flash messages
 setTimeout(() => {
     document.querySelectorAll('.flash-msg').forEach(el => {
-        el.style.opacity = '0'; el.style.transition = 'opacity 0.5s';
+        el.style.opacity = '0';
+        el.style.transition = 'opacity 0.5s';
         setTimeout(() => el.remove(), 500);
     });
 }, 4000);
