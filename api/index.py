@@ -2,11 +2,10 @@ import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 try:
-    from app import app, init_db
-    init_db()
+    from app import app
 except Exception as e:
     import traceback
-    from flask import Flask, jsonify
+    from flask import Flask
     app = Flask(__name__)
     error_detail = traceback.format_exc()
 
